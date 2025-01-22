@@ -1,0 +1,32 @@
+[project]
+name = "gradient"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "accelerate>=1.2.1",
+    "anypathlib>=0.2.0",
+    "datasets>=3.2.0",
+    "diffusers==0.30.2",
+    "evaluate>=0.4.3",
+    "numpy>=1.26.4",
+    "nvidia-ml-py3>=7.352.0",
+    "peft>=0.14.0",
+    "pre-commit>=4.0.1",
+    "requests-toolbelt>=1.0.0",
+    "sagemaker-ssh-helper>=2.2.1",
+    "scipy>=1.14.1",
+    "sentencepiece>=0.2.0",
+    "tensorboard>=2.18.0",
+    "torch>=2.5.1",
+    "torchaudio>=2.5.1",
+    "torchtools>=0.1.4",
+    "torchvision>=0.20.1",
+    "transformers>=4.47.1",
+    "urllib3>=2.3.0",
+    "wandb>=0.19.1",
+    "webdataset>=0.2.100",
+    "bitsandbytes"
+
+]

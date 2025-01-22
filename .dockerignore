@@ -1,0 +1,6 @@
+checkpoints/
+wandb/
+.gitignore
+.pre-commit-config.yaml
+.pylint
+.python-version
