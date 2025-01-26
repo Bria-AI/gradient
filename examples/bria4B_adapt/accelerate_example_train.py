@@ -60,7 +60,7 @@ trainer = TrainerConfig(
     checkpointing_steps=10,
 )
 
-os.environ["HF_API_TOKEN"] = "'HUGGINGFACE_TOKEN'"
+
 
 strategy = FSDPConfig(
     strategy_name="FSDP",

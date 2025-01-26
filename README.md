@@ -40,20 +40,16 @@ pip install -U "huggingface_hub[cli]"
 huggingface-cli login
 ```
 
-- Clone
-```bash
-git lfs install
 
-git clone https://huggingface.co/briaai/BRIA-4B-Adapt /home/ubuntu/BRIA-4B-Adapt
-
-```
+- Request access to [/BRIA-4B-Adapt](https://huggingface.co/briaai/BRIA-4B-Adapt) 
 
 
-- Request access to [stable-diffusion-3-medium-diffusers](https://huggingface.co/stabilityai/stable-diffusion-3-medium-diffusers) HF space:
+
+- Request access to [stable-diffusion-3-medium-diffusers](https://huggingface.co/stabilityai/stable-diffusion-3-medium-diffusers) 
 
 - Run
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 ## 1️⃣ Quick Example

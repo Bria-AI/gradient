@@ -27,6 +27,7 @@ dependencies = [
     "urllib3>=2.3.0",
     "wandb>=0.19.1",
     "webdataset>=0.2.100",
-    "bitsandbytes"
-
+    "bitsandbytes",
+    "pydantic>=2.10.5",
+    "sagemaker>=2.237.3",
 ]

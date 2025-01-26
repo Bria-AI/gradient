@@ -376,19 +376,30 @@ class Bria4BAdapt:
             transformer_config, time_theta=args.time_theta, rope_theta=args.rope_theta
         )
         # transformer_init = os.environ.get(f"{get_env_prefix()}_TRANSFORMER_INIT")
-        transformer_init = trainer_config.base_model_dir
-
-        if transformer_init:
-            if os.path.exists(f"{transformer_init}/diffusion_pytorch_model.safetensors"):
-                transformer_init = f"{transformer_init}/diffusion_pytorch_model.safetensors"
-            else:
-                transformer_init = f"{transformer_init}/pytorch_model_fsdp.bin"
-
+        if trainer_config.huggingface_path:
             print(
-                f"\n--------Loading transformer weights from {transformer_init}--------\n"
+                f"Loading transformer from {trainer_config.huggingface_path}"
             )
+            transformer.from_pretrained(
+                trainer_config.huggingface_path,
+                subfolder="transformer",
+                force_download=args.force_download,
+            )
+        else:
+            transformer_init = trainer_config.base_model_dir
+            if transformer_init:
+                if os.path.exists(f"{transformer_init}/diffusion_pytorch_model.safetensors"):
 
-            transformer.load_state_dict(torch.load(transformer_init))
+                    transformer_init = f"{transformer_init}/diffusion_pytorch_model.safetensors"
+                else:
+                    transformer_init = f"{transformer_init}/pytorch_model_fsdp.bin"
+
+                print(
+                    f"\n--------Loading transformer weights from {transformer_init}--------\n"
+                )
+
+                transformer.load_state_dict(torch.load(transformer_init))
+
 
         transformer.to(accelerator.device)
         if args.compile:

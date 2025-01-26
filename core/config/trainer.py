@@ -50,6 +50,10 @@ class TrainerConfig(BaseModel):
         default=False,
         description="Upcast the model before saving.",
     )
+    huggingface_path: Optional[str] = Field(
+        default=None,
+        description="Path to a directory containing a Hugging Face model.",
+    )
 
     def _download_checkpoint(self, resume_from_checkpoint: str) -> None:
         """
