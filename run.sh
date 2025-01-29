@@ -17,4 +17,5 @@ docker run  \
     -v /home/ubuntu/.aws:/root/.aws:ro \
     -v /home/ubuntu/.cache/huggingface/hub:/gradient/.cache/huggingface/hub \
     -e HF_API_TOKEN=$HF_API_TOKEN \
-    bria-4b-adapt 
+    -e WANDB_API_KEY=$WANDB_API_KEY \
+    bria-4b-adapt

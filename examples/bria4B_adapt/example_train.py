@@ -1,11 +1,11 @@
 import datetime
-from core.config.bria4B_adapt import HyperParemeter as model_config
-from core.config.dataloader import DataLoaderConfig
-from core.config.loggers import WandB
-from core.config.dataset import DatasetConfig
-from core.config.startegy import FSDPConfig
-from models.diffusion.bria4B_adapt.train import Bria4BAdapt as Model
-from core.config.trainer import TrainerConfig
+from gradient.core.config.bria4B_adapt import HyperParemeter as model_config
+from gradient.core.config.dataloader import DataLoaderConfig
+from gradient.core.config.loggers import WandB
+from gradient.core.config.dataset import DatasetConfig
+from gradient.core.config.startegy import FSDPConfig
+from gradient.models.diffusion.bria4B_adapt.train import Bria4BAdapt as Model
+from gradient.core.config.trainer import TrainerConfig
 
 if __name__ == "__main__":
     print("Running example_train.py")
@@ -19,14 +19,13 @@ if __name__ == "__main__":
         use_flow_matching=1,
         use_dynamic_shift=0,
         train_with_ratios=0,
-        resolution=1024,
+        resolution=256,
         resize=True,
         center_crop=True,
         weighting_scheme="uniform",
         force_download=False,
         use_8bit_adam=True,
     )
-
 
     model = Model(bria_conf)
 

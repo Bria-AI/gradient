@@ -50,22 +50,22 @@ from torch.distributed.fsdp.wrap import (
 )
 from transformers import T5EncoderModel, T5TokenizerFast
 
-from core.config.bria4B_adapt import HyperParemeter as model_config
-from core.config.dataloader import DataLoaderConfig
-from core.config.dataset import DatasetConfig
-from core.config.loggers import Logger
-from core.config.startegy import StrategyConfig
-from core.config.trainer import TrainerConfig
+from gradient.core.config.bria4B_adapt import HyperParemeter as model_config
+from gradient.core.config.dataloader import DataLoaderConfig
+from gradient.core.config.dataset import DatasetConfig
+from gradient.core.config.loggers import Logger
+from gradient.core.config.startegy import StrategyConfig
+from gradient.core.config.trainer import TrainerConfig
 
-from models.diffusion.bria4B_adapt.model_utils.bria_utils import get_t5_prompt_embeds
-from models.diffusion.bria4B_adapt.model_utils.bucket_spliting import (
+from gradient.models.diffusion.bria4B_adapt.model_utils.bria_utils import get_t5_prompt_embeds
+from gradient.models.diffusion.bria4B_adapt.model_utils.bucket_spliting import (
     get_deterministic_training_dirs,
     get_deterministic_training_dirs_dynamic_batches,
 )
-from models.diffusion.bria4B_adapt.model_utils.pipeline_bria import BriaPipeline
-from models.diffusion.bria4B_adapt.model_utils.schedulers import BriaDDIMScheduler
-from models.diffusion.bria4B_adapt.model_utils.torch_utils import load_dataset_from_tars
-from models.diffusion.bria4B_adapt.model_utils.transformer_bria import (
+from gradient.models.diffusion.bria4B_adapt.model_utils.pipeline_bria import BriaPipeline
+from gradient.models.diffusion.bria4B_adapt.model_utils.schedulers import BriaDDIMScheduler
+from gradient.models.diffusion.bria4B_adapt.model_utils.torch_utils import load_dataset_from_tars
+from gradient.models.diffusion.bria4B_adapt.model_utils.transformer_bria import (
     BriaTransformer2DModel,
 )
 
@@ -377,9 +377,7 @@ class Bria4BAdapt:
         )
         # transformer_init = os.environ.get(f"{get_env_prefix()}_TRANSFORMER_INIT")
         if trainer_config.huggingface_path:
-            print(
-                f"Loading transformer from {trainer_config.huggingface_path}"
-            )
+            print(f"Loading transformer from {trainer_config.huggingface_path}")
             transformer.from_pretrained(
                 trainer_config.huggingface_path,
                 subfolder="transformer",
@@ -388,9 +386,13 @@ class Bria4BAdapt:
         else:
             transformer_init = trainer_config.base_model_dir
             if transformer_init:
-                if os.path.exists(f"{transformer_init}/diffusion_pytorch_model.safetensors"):
+                if os.path.exists(
+                    f"{transformer_init}/diffusion_pytorch_model.safetensors"
+                ):
 
-                    transformer_init = f"{transformer_init}/diffusion_pytorch_model.safetensors"
+                    transformer_init = (
+                        f"{transformer_init}/diffusion_pytorch_model.safetensors"
+                    )
                 else:
                     transformer_init = f"{transformer_init}/pytorch_model_fsdp.bin"
 
@@ -399,7 +401,6 @@ class Bria4BAdapt:
                 )
 
                 transformer.load_state_dict(torch.load(transformer_init))
-
 
         transformer.to(accelerator.device)
         if args.compile:

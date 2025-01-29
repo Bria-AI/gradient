@@ -41,11 +41,11 @@ huggingface-cli login
 ```
 
 
-- Request access to [/BRIA-4B-Adapt](https://huggingface.co/briaai/BRIA-4B-Adapt) 
+- Request access to [/BRIA-4B-Adapt](https://huggingface.co/briaai/BRIA-4B-Adapt)
 
 
 
-- Request access to [stable-diffusion-3-medium-diffusers](https://huggingface.co/stabilityai/stable-diffusion-3-medium-diffusers) 
+- Request access to [stable-diffusion-3-medium-diffusers](https://huggingface.co/stabilityai/stable-diffusion-3-medium-diffusers)
 
 - Run
 ```bash

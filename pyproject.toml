@@ -1,9 +1,14 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "gradient"
 version = "0.1.0"
-description = "Add your description here"
+authors = [{ name = "Bria.ai", email = "gal@bria.ai" }]
+description = "A library for training and fine-tuning Bria foundation models"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 dependencies = [
     "accelerate>=1.2.1",
     "anypathlib>=0.2.0",
@@ -31,3 +36,20 @@ dependencies = [
     "pydantic>=2.10.5",
     "sagemaker>=2.237.3",
 ]
+
+[project.urls]
+Homepage = "https://github.com/Bria-AI/gradient"
+
+
+[tool.setuptools]
+packages = ["gradient"]
+
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+max-line-length = 88
