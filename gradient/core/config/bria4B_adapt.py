@@ -263,7 +263,7 @@ class HyperParemeter(BaseModel):
     def get_hyperparameter(self) -> dict:
         args = self.model_dump()
 
-        print(f"flow_matching_latent_loss: {args.flow_matching_latent_loss}")
+        print(f"flow_matching_latent_loss: {args["flow_matching_latent_loss"]}")
 
         env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
         if env_local_rank != -1 and env_local_rank != args.local_rank:
