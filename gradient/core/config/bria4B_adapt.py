@@ -260,19 +260,26 @@ class HyperParemeter(BaseModel):
         description="Enable dynamic shift.",
     )
 
-    def get_hyperparameter(self) -> dict:
-        args = self.model_dump()
+    def get_hyperparameter(self):
 
-        # print(f"flow_matching_latent_loss: {args["flow_matching_latent_loss"]}")
+        print(f"flow_matching_latent_loss: {self.flow_matching_latent_loss}")
 
         env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
-        if env_local_rank != -1 and env_local_rank != args["local_rank"]:
-            args["local_rank"] = env_local_rank
+        if env_local_rank != -1 and env_local_rank != self.local_rank:
+            self.local_rank = env_local_rank
+
+        # Sanity checks
+        if self.dataset_name is None and self.data_channels == "":
+            raise ValueError("Need either a dataset name or a training folder.")
+
+        assert (
+            self.s3_prefix is not None
+        ), "s3_prefix must be specified, i.e., dir for saving checkpoints at s3"
 
         # Init boolean args that are ints
-        args["reinit_scheduler"] = args["reinit_scheduler"] == 1
-        args["use_adafactor"] = args["use_adafactor"] == 1
-        args["reinit_optimizer"] = args["reinit_optimizer"] == 1
-        args["train_with_ratios"] = args["train_with_ratios"] == 1
+        self.reinit_scheduler = self.reinit_scheduler == 1
+        self.use_adafactor = self.use_adafactor == 1
+        self.reinit_optimizer = self.reinit_optimizer == 1
+        self.train_with_ratios == (self.train_with_ratios == 1)
 
-        return args
+        return self

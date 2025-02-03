@@ -172,7 +172,11 @@ class Bria4BAdapt:
         logger_config: Optional[Logger] = None,
     ):
 
-        args = self.args.get_hyperparameter()
+        args = self.args
+        env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
+        if env_local_rank != -1 and env_local_rank != self.local_rank:
+            self.local_rank = env_local_rank
+        print(f"Local rank: {self.local_rank}")
         set_seed(args.seed)
         logger = get_logger(__name__, log_level="INFO")
         if logger_config is None:
