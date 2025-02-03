@@ -269,14 +269,6 @@ class HyperParemeter(BaseModel):
         if env_local_rank != -1 and env_local_rank != args["local_rank"]:
             args["local_rank"] = env_local_rank
 
-        # Sanity checks
-        if args.get("dataset_name") is None and args.get("data_channels", "") == "":
-            raise ValueError("Need either a dataset name or a training folder.")
-
-        assert (
-            args["s3_prefix"] is not None
-        ), "s3_prefix must be specified, i.e., dir for saving checkpoints at s3"
-
         # Init boolean args that are ints
         args["reinit_scheduler"] = args["reinit_scheduler"] == 1
         args["use_adafactor"] = args["use_adafactor"] == 1
