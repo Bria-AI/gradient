@@ -918,8 +918,12 @@ class Bria4BAdapt:
                 entity=logger_config.wandb_entity,
                 config=conf,
                 mode=logger_config.wandb_mode,
+                group=logger_config.wandb_group,
+                name=logger_config.wandb_name,
             )
-            # accelerator.init_trackers()  # config=vars(args)
+            # init wandb trackers ecce
+            
+            # accelerator.init_trackers() 
             wandb.config.update(vars(args), allow_val_change=True)
 
         # Train!
