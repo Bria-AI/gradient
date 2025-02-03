@@ -915,7 +915,7 @@ class Bria4BAdapt:
                 config=conf,
                 mode=logger_config.wandb_mode,
                 group=logger_config.wandb_group,
-                name=logger_config.wandb_name,
+                name=logger_config.wandb_run_name,
             )
             # init wandb trackers ecce
 
