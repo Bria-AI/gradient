@@ -172,7 +172,7 @@ class Bria4BAdapt:
         logger_config: Optional[Logger] = None,
     ):
 
-        args = self.args
+        args = self.args.get_hyperparameter()
         set_seed(args.seed)
         logger = get_logger(__name__, log_level="INFO")
         if logger_config is None:
@@ -186,6 +186,7 @@ class Bria4BAdapt:
         )
 
         fsdp_plugin = None
+        print(f"Strategy name: {startegy_config.strategy_name}")
         if startegy_config.strategy_name == "fsdp":
             os.environ["ACCELERATE_USE_FSDP"] = "true"
             if startegy_config.compile:
@@ -733,6 +734,7 @@ class Bria4BAdapt:
                     trust_remote_code=True,
                 )
                 print(f"Shuffeling according to seed: {seed}")
+                print(f"size of dataset: {len(ds)}")
                 dataset = ds.shuffle(seed=seed, buffer_size=10_000)
         else:
 
@@ -912,9 +914,9 @@ class Bria4BAdapt:
                 entity=logger_config.wandb_entity,
                 config=conf,
                 mode=logger_config.wandb_mode,
-                # name=logger_config.wandb_name,
+                name=logger_config.wandb_name,
             )
-            accelerator.init_trackers("text2image-fine-tune")  # config=vars(args)
+            # accelerator.init_trackers()  # config=vars(args)
             wandb.config.update(vars(args), allow_val_change=True)
 
         # Train!
