@@ -175,8 +175,8 @@ class Bria4BAdapt:
         args = self.args
         env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
         if env_local_rank != -1 and env_local_rank != self.local_rank:
-            self.local_rank = env_local_rank
-        print(f"Local rank: {self.local_rank}")
+            args.local_rank = env_local_rank
+        print(f"Local rank: {args.local_rank}")
         set_seed(args.seed)
         logger = get_logger(__name__, log_level="INFO")
         if logger_config is None:
@@ -922,8 +922,8 @@ class Bria4BAdapt:
                 name=logger_config.wandb_name,
             )
             # init wandb trackers ecce
-            
-            # accelerator.init_trackers() 
+
+            # accelerator.init_trackers()
             wandb.config.update(vars(args), allow_val_change=True)
 
         # Train!
