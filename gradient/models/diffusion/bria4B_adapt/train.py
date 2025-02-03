@@ -261,12 +261,12 @@ class Bria4BAdapt:
         if not args.precompute:
             tokenizer = T5TokenizerFast.from_pretrained(
                 args.pretrained_text_encoder_name_or_path,
-                subfolder="tokenizer_3",
+                subfolder="tokenizer",
                 force_download=args.force_download,
             )
             text_encoder = T5EncoderModel.from_pretrained(
                 args.pretrained_text_encoder_name_or_path,
-                subfolder="text_encoder_3",
+                subfolder="text_encoder",
                 torch_dtype=torch.float16,
                 force_download=args.force_download,
             )
