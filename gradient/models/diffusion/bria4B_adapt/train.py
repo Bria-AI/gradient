@@ -223,7 +223,7 @@ class Bria4BAdapt:
             mixed_precision=args.mixed_precision,
             log_with=logger_config.report_to,
             project_config=accelerator_project_config,
-            dispatch_batches=False,
+            # dispatch_batches=False,
             fsdp_plugin=fsdp_plugin,
             kwargs_handlers=kwargs_handlers,
         )
