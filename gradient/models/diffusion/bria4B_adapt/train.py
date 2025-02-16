@@ -103,8 +103,8 @@ def get_env_prefix():
         return "SM_CHANNEL"
     elif env == "AZURE":
         return "AZUREML_DATAREFERENCE"
-
-    raise Exception(f"Env {env} not supported")
+    else:
+        return ""
 
 
 def compute_density_for_timestep_sampling(
@@ -517,13 +517,25 @@ class Bria4BAdapt:
         if dataset_config.dataset_name and args.train_with_ratios:
             raise Exception("Please choose ratios or datasetname")
 
-        if dataset_config.dataset_name is None and args.center_crop:
+        if (
+            dataset_config.dataset_name is None
+            and dataset_config.local_path is None
+            and args.center_crop
+        ):
             raise Exception("center_crop is only used with dataset_name")
 
-        if dataset_config.dataset_name is None and args.resize:
+        if (
+            dataset_config.dataset_name is None
+            and dataset_config.local_path is None
+            and args.resize
+        ):
             raise Exception("resize is only used with dataset_name")
 
-        if dataset_config.dataset_name is None and args.h_flip:
+        if (
+            dataset_config.dataset_name is None
+            and dataset_config.local_path is None
+            and args.h_flip
+        ):
             raise Exception("resize is only used with dataset_name")
 
         # Multi Aspect Ratio
@@ -736,8 +748,15 @@ class Bria4BAdapt:
                 print(f"Shuffeling according to seed: {seed}")
                 print(f"size of dataset: {len(ds)}")
                 dataset = ds.shuffle(seed=seed, buffer_size=10_000)
+        elif dataset_config.local_path:
+            dataset = datasets.load_dataset(
+                dataset_config.local_path,
+                trust_remote_code=True,
+                split="train",
+                streaming=True,
+                token=True,
+            )
         else:
-
             ds = load_dataset_from_tars(
                 training_dirs=training_dirs,
                 rank=RANK,
@@ -859,7 +878,7 @@ class Bria4BAdapt:
         # DataLoaders creation:
         print(f"Using {dataloader_config.num_workers} Workers")
         train_dataloader = torch.utils.data.DataLoader(
-            train_dataset,
+            dataset=train_dataset,
             # shuffle=True,
             collate_fn=collate_fn,
             batch_size=dataset_config.train_batch_size,

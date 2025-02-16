@@ -10,7 +10,10 @@ class DatasetConfig(BaseModel):
     For details on the function/meanings of the arguments, refer to:
     https://pytorch.org/docs/stable/data.html#torch.utils.data.Dataset
     """
-
+    local_path: Optional[str] = Field(
+        default=None,
+        description="Path to a local directory containing a dataset.",
+    )
     dataset_name: Optional[str] = Field(
         default=None,
         description=(
